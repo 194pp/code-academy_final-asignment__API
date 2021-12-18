@@ -12,11 +12,13 @@ function authenticateToken(req, res, next) {
       return res.status(403).json({ error: 'token expired/invalid' });
     }
     console.log('data in jwt', data);
-    req.user = data.email;
-    req.userId = data.userId;
-    console.log(req.user, req.userId)
+    req.username = data.username;
+    req._id = data._id;
+    console.log(req.user, req._id)
     next();
   });
 }
 
-module.exports = authenticateToken
+module.exports = {
+  authenticateToken
+}

@@ -35,6 +35,10 @@ const AccountsSchema = new mongoose.Schema({
     default: Date.now(),
     immutable: true,
   },
+  archived: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 AccountsSchema.post('save', async function () {
