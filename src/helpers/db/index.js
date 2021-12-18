@@ -17,10 +17,14 @@ const dbFindDocuments = async (model, filter = {}) => {
 const dbDeleteDocument = async (model, id) => {
   return await model.findOneAndUpdate({_id: id}, {$set: {archived: true}});
 }
-
+const dbVerifyUser = async (model, id) => {
+  const user = await model.findOne({_id: id, archived: false});
+  return !!user;
+}
 module.exports = {
   dbConnect,
   dbCreateDoc,
   dbFindDocuments,
-  dbDeleteDocument
+  dbDeleteDocument,
+  dbVerifyUser,
 };
