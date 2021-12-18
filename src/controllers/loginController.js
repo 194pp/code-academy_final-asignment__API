@@ -8,7 +8,7 @@ module.exports = {
   loginUser: async (req, res) => {
 
     try {
-      const account = await AccountsModel.findOne({username: req.body.username});
+      const account = await AccountsModel.findOne({username: req.body.username}).select('+password');
       if (!account) {
         return res.status(401).send(errorResp('Account does not exist'));
       }

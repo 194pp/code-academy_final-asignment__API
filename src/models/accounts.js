@@ -15,6 +15,7 @@ const AccountsSchema = new mongoose.Schema({
     trim: true,
     minlength: 8,
     required: true,
+    select: false,
   },
   age: {
     type: Number,
