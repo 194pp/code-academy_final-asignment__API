@@ -11,6 +11,15 @@ module.exports = {
       res.status(400).send(errorResp('Getting data failed', err));
     }
   },
+  getOne: async (req, res) => {
+    try {
+      const user = await dbFindUser(req.params._id);
+      res.status(201).json(successResp('Got user', {user}));
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(errorResp('Getting data failed', err));
+    }
+  },
   deleteOne: async (req, res) => {
     try {
       const deletedUser = await dbDeleteUser(req.body.idToDelete);
