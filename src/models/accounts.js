@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const { isEmail } = require('validator');
+const {isEmail} = require('validator');
+const {encrypt} = require("../helpers/encryption/encryption");
 
 const AccountsSchema = new mongoose.Schema({
   username: {
@@ -38,17 +38,15 @@ const AccountsSchema = new mongoose.Schema({
   archived: {
     type: Boolean,
     default: false,
+    select: false,
   }
 });
 
 AccountsSchema.post('save', async function () {
   console.log('Naujas vartotojas sukurtas ir išsaugotas duomenų bazėje', this);
 });
-
 AccountsSchema.pre('save', async function () {
-  const salt = await bcrypt.genSalt();
-  console.log('Slaptažodis: ', this.password);
-  this.password = await bcrypt.hash(this.password, salt);
+  this.password = await encrypt(this.password);
 });
 
 module.exports = mongoose.model('accounts', AccountsSchema);

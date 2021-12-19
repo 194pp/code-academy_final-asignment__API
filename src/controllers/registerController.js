@@ -1,5 +1,6 @@
 const AccountsModel = require('../models/accounts');
 const { successResp, errorResp } = require('../helpers/response/response');
+const {dbCreateUser} = require("../helpers/db");
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -26,7 +27,7 @@ const handleErrors = (err) => {
 module.exports = {
   registerNewUser: async (req, res) => {
     try {
-      const account = await AccountsModel.create({...req.body});
+      const account = await dbCreateUser({...req.body});
       res.status(201).json(successResp('Account has been created', account));
     } catch (err) {
       const errors = handleErrors(err);

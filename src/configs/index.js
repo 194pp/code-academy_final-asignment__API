@@ -11,9 +11,11 @@ const db = {
 const dbString = `mongodb+srv://${db.user}:${db.password}${db.cluster}${db.db}${db.params}`;
 const serverPort = process.env.SERVER_PORT || 3000;
 const secret = process.env.SECRET;
+const tokenExpiration = '24h';
 
 module.exports = {
   dbString,
   serverPort,
   secret,
+  tokenExpiration,
 };

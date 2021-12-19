@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const {secret} = require("../../configs");
+const {secret, tokenExpiration} = require("../../configs");
 const {dbVerifyUser} = require("../db");
-const Accounts = require('../../models/accounts');
+const AccountsModel = require('../../models/accounts');
 
 function authenticateToken(req, res, next) {
   const token = req.body.token;
@@ -14,7 +14,7 @@ function authenticateToken(req, res, next) {
       return res.status(403).json({ error: 'token expired/invalid' });
     }
     console.log('data in jwt', data);
-    const valid = await dbVerifyUser(Accounts, data._id);
+    const valid = await dbVerifyUser(data._id);
     if (!valid) {
       return res.status(403).json({ error: 'your user was deleted' });
     }
@@ -24,7 +24,11 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+function generateToken(data) {
+  return jwt.sign(data, secret, {expiresIn: tokenExpiration});
+}
 
 module.exports = {
-  authenticateToken
+  authenticateToken,
+  generateToken,
 }

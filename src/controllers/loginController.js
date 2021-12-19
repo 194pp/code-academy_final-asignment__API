@@ -1,12 +1,10 @@
 const AccountsModel = require('../models/accounts');
 const bcrypt = require('bcrypt');
 const {errorResp, successResp} = require("../helpers/response/response");
-const jwt = require('jsonwebtoken');
-const {secret} = require("../configs");
+const {generateToken} = require("../helpers/auth/jwtHelper");
 
 module.exports = {
   loginUser: async (req, res) => {
-
     try {
       const account = await AccountsModel.findOne(
         {username: req.body.username, archived: false}
@@ -21,9 +19,8 @@ module.exports = {
           const dataToEncrypt = {
             _id: account._id,
             username: account.username,
-            role: account.role,
           }
-          const token = jwt.sign(dataToEncrypt, secret, {expiresIn: '24h'});
+          const token = generateToken(dataToEncrypt);
           res.status(201).json(successResp('Logged in', {token: token}));
         } else {
           res.status(401).send(errorResp('Wrong password', err));
