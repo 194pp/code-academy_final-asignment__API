@@ -1,7 +1,5 @@
-const AccountsModel = require('../models/accounts');
 const {errorResp, successResp} = require("../helpers/response/response");
 const {dbFindUsers, dbDeleteUser, dbModifyUser, dbFindUser} = require("../helpers/db");
-const {encrypt} = require("../helpers/encryption/encryption");
 
 module.exports = {
   getAll: async (req, res) => {

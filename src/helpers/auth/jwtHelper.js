@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {secret, tokenExpiration} = require("../../configs");
 const {dbVerifyUser} = require("../db");
-const AccountsModel = require('../../models/accounts');
 
 function authenticateToken(req, res, next) {
   const token = req.body.token;

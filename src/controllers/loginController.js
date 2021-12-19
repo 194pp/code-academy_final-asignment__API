@@ -19,7 +19,7 @@ module.exports = {
           const dataToEncrypt = {
             _id: account._id,
             username: account.username,
-          }
+          };
           const token = generateToken(dataToEncrypt);
           res.status(201).json(successResp('Logged in', {token: token}));
         } else {
