@@ -13,7 +13,7 @@ const handleErrors = (err) => {
     }
     return errors;
   }
-  if (err.message.includes('accounts validation failed')) {
+  if (err.message.includes('Vartotojo validacijos klaida')) {
     Object.values(err.errors).forEach(({properties}) => {
       errors[properties.path] = properties.message;
     });
@@ -25,7 +25,7 @@ module.exports = {
   registerNewUser: async (req, res) => {
     try {
       const account = await dbCreateUser({...req.body});
-      res.status(201).json(successResp('Account has been created', account));
+      res.status(201).json(successResp('Vartotojas buvo sukurtas', account));
     } catch (err) {
       const errors = handleErrors(err);
       res.status(400).send(errorResp('Registracijos klaida', errors));

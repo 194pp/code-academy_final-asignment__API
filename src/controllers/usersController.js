@@ -22,9 +22,11 @@ module.exports = {
   },
   deleteOne: async (req, res) => {
     try {
+      console.log({requestBody: req.body});
       const deletedUser = await dbDeleteUser(req.body.idToDelete);
+      console.log({deletedUser: deletedUser});
       if (!document) return res.status(404).send(errorResp('no account to delete'));
-      res.status(201).json(successResp('Deleted user', {deletedUser}));
+      res.status(200).json(successResp('User was deleted'));
     } catch (err) {
       console.log(err);
       res.status(400).send(errorResp("Deleting document failed", err));

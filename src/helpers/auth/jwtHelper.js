@@ -4,7 +4,6 @@ const {dbVerifyUser} = require("../db");
 
 function authenticateToken(req, res, next) {
   const token = req.headers["authorization"].split(' ')[1];
-  console.log('token: ', token);
 
   if (!token) return res.status(401).json({ error: 'unauthorized request' });
 
@@ -12,14 +11,10 @@ function authenticateToken(req, res, next) {
     if (err) {
       return res.status(403).json({ error: 'token expired/invalid' });
     }
-    console.log('data in jwt', data);
     const valid = await dbVerifyUser(data._id);
     if (!valid) {
       return res.status(403).json({ error: 'your user was deleted' });
     }
-    req.username = data.username;
-    req._id = data._id;
-    console.log(req.user, req._id)
     next();
   });
 }
