@@ -3,8 +3,8 @@ const {secret, tokenExpiration} = require("../../configs");
 const {dbVerifyUser} = require("../db");
 
 function authenticateToken(req, res, next) {
-  const token = req.body.token;
-  console.log('token', token);
+  const token = req.headers["authorization"].split(' ')[1];
+  console.log('token: ', token);
 
   if (!token) return res.status(401).json({ error: 'unauthorized request' });
 
