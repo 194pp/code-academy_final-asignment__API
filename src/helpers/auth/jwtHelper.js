@@ -18,6 +18,10 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+function validateTokenForFrontend(token) {
+  return jwt.verify(token, secret)
+}
+
 function generateToken(data) {
   return jwt.sign(data, secret, {expiresIn: tokenExpiration});
 }
@@ -25,4 +29,5 @@ function generateToken(data) {
 module.exports = {
   authenticateToken,
   generateToken,
+  validateTokenForFrontend
 }

@@ -39,14 +39,14 @@ module.exports = {
       if (req.body.age) newData.age = req.body.age;
       if (req.body.password) newData.username = req.body.password;
       if (req.body.email) newData.email = req.body.email;
-      if (!newData) return res.status(204).send(errorResp("No data to edit"));
+      if (!newData) return res.status(204).send(errorResp("Duomenys nebuvo pakeisti"));
 
       await dbModifyUser(req.body.idToModify, {...req.body});
       const modifiedUser = await dbFindUser(req.body.idToModify);
-      res.status(201).json(successResp('User modified', {modifiedUser}));
+      res.status(201).json(successResp('Vartotojas koreguotas sėkmingai', {modifiedUser}));
     } catch (err) {
       console.log(err);
-      res.status(400).send(errorResp("Editing document failed", err));
+      res.status(400).send(errorResp("Įvyko koregavimo klaida", err));
     }
   }
 };
